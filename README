@@ -1,0 +1,65 @@
+[Português Brasil]
+
+Este e o testris, um clone do famoso tetris criado por Alexey Pajitnov na
+decada de 80 na russia (antiga União sovietica).
+
+Esse jogo busca ser simples e coerente com a primeira verção official
+criada justamente na decada de 80 e que rodava sobre terminais de texto
+simples.O objetivo do projeto é o aprendisado do criador já que existem outras 
+verçoes livres bem mais completas e polidas por ai, mas também pra ser jogado
+já que sera um jogo inteiramente jogavel por qualquer um.
+
+    Esse projeto não vai usar nenhuma biblioteca externas somente a
+biblioteca padrão da linguagem c no qual ele sera inteiramente escrito
+
+O jogo é simples o objetivo do jogador e empilhar uma peça de 7 que desem
+aleatoriamente na tela de forma que as linhas horizontais completas sejam
+formadas com isso o jogador ganhará pontos, a linha será destruida e o resto
+da pilha vai cair no espaço que foi liberado.A cada (n_l * 3) linhas completas o level
+do jogo vai subindo almentando assim a velocidade das peças que caem.o jogador
+também pode rotacionar as peças no sentido horario.
+
+Abaixo todas as peças com suas rotaçoẽs.
+
+========I BLOCK======
+&&______    &&&&&&&&
+&&______    ________
+&&______    ________
+&&______    ________
+
+========Z BLOCK=======
+&&&&____    __&&____
+__&&&&__    &&&&____
+________    &&______
+________    ________
+
+========S BLOCK=======
+__&&&&__    &&______
+&&&&____    &&&&____
+________    __&&____
+________    ________
+
+========T BLOCK=======
+__&&____    &&______	&&&&&&__    __&&____
+&&&&&&__    &&&&____	__&&____    &&&&____
+________    &&______	________    __&&____
+________    ________	________    ________
+
+========L BLOCK======
+&&______    &&&&&&&&	&&&&____    ______&&
+&&______    &&______	__&&____    &&&&&&&&
+&&______    ________	__&&____    ________
+&&&&____    ________	__&&____    ________
+
+========J BLOCK======
+__&&____    &&______	&&&&____    &&&&&&&&
+__&&____    &&&&&&&&	&&______    ______&&
+__&&____    ________	&&______    ________
+&&&&____    ________	&&______    ________
+
+========O BLOCK=======
+&&&&____
+&&&&____
+________
+________
+
