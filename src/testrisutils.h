@@ -15,7 +15,7 @@
 
 struct 
 {
-    uint8_t piece[ PIECE_HEIGHT ][ PIECE_WIDTH ]; 
+    char piece[ PIECE_HEIGHT ][ PIECE_WIDTH ]; 
     uint8_t direction;
     uint8_t type;
     uint8_t r_w, r_h; /* real width and height of piece */
@@ -23,7 +23,7 @@ struct
 } piece;
 
 /* util functions */
-void clear_board(uint8_t**  board);
+void clear_board();
 
 void rotate_piece();
 void gen_random_piece();

@@ -76,3 +76,57 @@ void col_handler()
 	}
     }
 }
+
+uint8_t row_detection()
+{
+    uint8_t cnt; /* count for every horizontal valid space on board*/
+    uint8_t state = 0;
+    register char x,y;
+
+    pile_height = 0; 
+    /*
+    * detect if have a complete row and the pile height  and store
+    * them on 2 variables to use on row_handler(). here is se the
+    * score and how many rows are made by player.
+    */
+    for (y = 0; y < BOARD_HEIGHT; y++)
+    {
+	for (x = 0; x < BOARD_WIDTH; x++)
+	{
+	    if (board[y][x])
+	    {
+		if(!pile_height){
+		    pile_height = y;
+		}
+		cnt++;
+	    }
+	}
+	if (cnt == BOARD_WIDTH){
+	    state = 1;
+	    row_y = y;
+	    rows++ 
+	}
+    }
+    return state;
+}
+
+void row_handler()
+{
+    uint8_t x, h;
+    /*
+    * this function take every horizontal location in a complete row 
+    * detected in row_detection() and replace along the hight of pile
+    * recreating a fall in board frozen pieces.
+    */
+    for (x = 0; x < BOARD_WIDTH; x++){	
+	for (h = row_y; h < pile_height + ; h--){
+	    board[h][x] = board[h - 1][x];
+	} 
+    }
+}
+
+
+void start()
+{
+    
+}

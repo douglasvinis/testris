@@ -24,6 +24,9 @@ static uint32_t score;
 static uint32_t rows;
 static uint32_t level;
 
+static uint8_t pile_height;
+static uint8_t row_y;
+
 /* get basic information about the game */
 uint32_t get_score();
 uint32_t get_rows();
