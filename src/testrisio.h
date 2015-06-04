@@ -13,6 +13,7 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #ifdef __WIN32__
 #  include <conio.h>
@@ -27,6 +28,12 @@
 #ifndef TESTRISIO_H
 #define TESTRISIO_H
 
+#ifndef __WIN32__
+/* structures for change input type of unix systems*/
+static struct termios settings;
+static struct termios start_settings;
+#endif
+
 /* 
 * if not in Windows system, implement conio.h function to send back
 * true or false if has keyboard input. 
@@ -35,7 +42,11 @@
 uint8_t kbhit();
 #endif
 
-uint8_t get_keyhit(char t);
-void	show()	/* show all game on console */
+void	input_init();
+void	input_stop();
+
+void	clear_screen();
+char get_keyhit();
+void	show();	/* show all game on console */
 
 #endif

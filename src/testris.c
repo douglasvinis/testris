@@ -7,11 +7,11 @@
 *|
 \===========================================================================*/
 
-#include <stdint.h>
 
+#include "testris.h"
 #include "testrisio.h"
 #include "testrisutils.h"
-#include "testris.h"
+
 
 uint32_t get_score()
 {
@@ -27,6 +27,7 @@ uint32_t get_level()
 {
     return level;
 }
+
 
 
 uint8_t col_detection()
@@ -104,7 +105,7 @@ uint8_t row_detection()
 	if (cnt == BOARD_WIDTH){
 	    state = 1;
 	    row_y = y;
-	    rows++ 
+	    rows++; 
 	}
     }
     return state;
@@ -119,7 +120,7 @@ void row_handler()
     * recreating a fall in board frozen pieces.
     */
     for (x = 0; x < BOARD_WIDTH; x++){	
-	for (h = row_y; h < pile_height + ; h--){
+	for (h = row_y; h < pile_height ; h--){
 	    board[h][x] = board[h - 1][x];
 	} 
     }
@@ -128,5 +129,54 @@ void row_handler()
 
 void start()
 {
-    
+    uint8_t is_running = 1;
+    char command = 0;
+    int time = 0; /* count how many times to piece fall*/
+
+    input_init();
+    clear_board();
+    gen_random_piece();
+
+    while (is_running)
+    {
+	uint8_t collision;
+	uint8_t row_full;
+
+	clear_screen();
+	/* wait a little time*/
+	usleep(TIME_USLEEP);
+
+	collision = col_detection();
+	row_full = row_detection();
+	if (collision == COL_DOWN)
+	{ 
+	    col_handler();
+	    gen_random_piece();
+	}
+	if (row_full) row_handler();
+	
+	time++;
+	if (time > fall_maxt)
+	{
+	    time = 0;
+	    piece.y += 1;
+	} 
+
+	/* get input from player to move the piece */
+	if(kbhit()){
+	    command = get_keyhit();
+	    if (command == 'a' && collision != COL_LEFT){
+		piece.x -= 2;
+	    }
+	    if (command == 'd' && collision != COL_RIGHT){
+		piece.x += 2;
+	    }
+	    if (command == 's' && collision != COL_DOWN){
+		piece.y += 1;
+	    }
+	}
+	show();
+    }
+
+    input_stop();
 }

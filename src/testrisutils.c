@@ -8,9 +8,11 @@
 \===========================================================================*/
 
 #include <stdlib.h>
+#include <stdint.h>
 #include <time.h>
 
-#inlcude "testrisutils.h"
+#include "testrisutils.h"
+#include "testris.h"
 
 
 void clear_board()
@@ -21,7 +23,7 @@ void clear_board()
     {
 	for (x  = 0;x < BOARD_WIDTH; x++)
 	{
-	    board[y][x] = 0;
+	    board[y][x] = '\0';
 	}
     }
 }

@@ -13,14 +13,14 @@
 #define PIECE_WIDTH 8
 #define PIECE_HEIGHT 4
 
-struct 
+struct Piece
 {
-    char piece[ PIECE_HEIGHT ][ PIECE_WIDTH ]; 
+    char* piece[ PIECE_HEIGHT ];//[ PIECE_WIDTH ]; 
     uint8_t direction;
     uint8_t type;
     uint8_t r_w, r_h; /* real width and height of piece */
     int x,y; 
-} piece;
+}piece;
 
 /* util functions */
 void clear_board();
