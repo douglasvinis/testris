@@ -30,39 +30,40 @@ uint32_t get_level()
 
 
 
-uint8_t col_detection()
+void col_detection(uint8_t* state)
 {
-    uint8_t state = 0;
     register char x,y;
     
     /* 
     * look every part of the piece and verify if in there have a 
     * collision in each side, 2 cordnates of distance.
      */
-    for (y = 0; y < PIECE_HEIGHT; y++)
+    for (y = 0; y < piece.r_h; y++)
     {
-	for (x = 0; x < PIECE_WIDTH; x++)
+	for (x = 0; x < piece.r_w; x++)
 	{
-	    if (board[piece.y + y] [(piece.x + x) - 2]){
-		state = COL_LEFT;  /* left collision */
+	    if (piece.piece[y][x] == '1') /* detect only if is a valid block*/
+	    {
+		if (board[piece.y + y] [(piece.x + x) - 1] == '1'){
+		    state[0] = COL_LEFT;  /* left collision */
 
-	    }else if (board[piece.y + y] [(piece.x + x) + 2]){
-		state = COL_RIGHT;  /* right collision */
+		}else if (board[piece.y + y] [(piece.x + x) + 1] == '1'){
+		   state[1] = COL_RIGHT;  /* right collision */
 
-	    }else if (board[(piece.y + y) + 2] [piece.x + x]){
-		state = COL_DOWN;  /* fall collision */
+		}if (board[(piece.y + y) + 1] [piece.x + x] == '1'){
+		    state[2] = COL_DOWN;  /* fall collision */
+		}
 	    }
 	}
     }
 
     /* if has collision with board borders.. */
     if (piece.x - 1 <= 0){
-	state = 1;
+	state[0] = COL_LEFT;
     }else if ((piece.x + piece.r_w) + 1 >= BOARD_WIDTH){
-	state = 2;
-    }
+	state[1] = COL_RIGHT;
+    }if (piece.y+piece.r_h >= BOARD_HEIGHT) state[2] = COL_DOWN;
 
-    return state;
 }
 
 void col_handler()
@@ -73,7 +74,9 @@ void col_handler()
     {
 	for (x = 0; x < PIECE_WIDTH; x++)
 	{
-	    board[piece.y + y][piece.x + x] = piece.piece[y][x];
+	    if (piece.piece[y][x] != ' '){
+		board[piece.y + y][piece.x + x] = piece.piece[y][x];
+	    }
 	}
     }
 }
@@ -94,7 +97,7 @@ uint8_t row_detection()
     {
 	for (x = 0; x < BOARD_WIDTH; x++)
 	{
-	    if (board[y][x])
+	    if (board[y][x] != ' ')
 	    {
 		if(!pile_height){
 		    pile_height = y;
@@ -103,10 +106,12 @@ uint8_t row_detection()
 	    }
 	}
 	if (cnt == BOARD_WIDTH){
+	    cnt = 0;
 	    state = 1;
 	    row_y = y;
 	    rows++; 
-	}
+	    break;
+	}else cnt = 0;
     }
     return state;
 }
@@ -120,7 +125,7 @@ void row_handler()
     * recreating a fall in board frozen pieces.
     */
     for (x = 0; x < BOARD_WIDTH; x++){	
-	for (h = row_y; h < pile_height ; h--){
+	for (h = row_y; h >= pile_height ; h--){
 	    board[h][x] = board[h - 1][x];
 	} 
     }
@@ -132,6 +137,7 @@ void start()
     uint8_t is_running = 1;
     char command = 0;
     int time = 0; /* count how many times to piece fall*/
+    fall_maxt = 20;
 
     input_init();
     clear_board();
@@ -139,21 +145,23 @@ void start()
 
     while (is_running)
     {
-	uint8_t collision;
+	uint8_t collision[3] = {0,0,0};
 	uint8_t row_full;
 
-	clear_screen();
 	/* wait a little time*/
 	usleep(TIME_USLEEP);
+	clear_screen();
 
-	collision = col_detection();
+	col_detection(collision);
 	row_full = row_detection();
-	if (collision == COL_DOWN)
+	if (collision[2] == COL_DOWN)
 	{ 
 	    col_handler();
 	    gen_random_piece();
 	}
-	if (row_full) row_handler();
+	if (row_full){
+	     row_handler();
+	}
 	
 	time++;
 	if (time > fall_maxt)
@@ -165,13 +173,13 @@ void start()
 	/* get input from player to move the piece */
 	if(kbhit()){
 	    command = get_keyhit();
-	    if (command == 'a' && collision != COL_LEFT){
+	    if (command == 'a' && collision[0] != COL_LEFT){
 		piece.x -= 2;
 	    }
-	    if (command == 'd' && collision != COL_RIGHT){
+	    if (command == 'd' && collision[1] != COL_RIGHT){
 		piece.x += 2;
 	    }
-	    if (command == 's' && collision != COL_DOWN){
+	    if (command == 's' && collision[2] != COL_DOWN){
 		piece.y += 1;
 	    }
 	}

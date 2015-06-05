@@ -14,7 +14,7 @@
 #include "testris.h"
 #include "testrisutils.h"
 
-#ifndef __WIN32__
+#ifndef __WIN32__ 
 uint8_t kbhit()
 {
     struct timeval tv; fd_set fds;
@@ -70,19 +70,21 @@ void show()
 
     for (y = 0;y < BOARD_HEIGHT; y++)
     {
+	printf("|*|");	
 	for (x = 0;x < BOARD_WIDTH; x++)
 	{
-	    if ((y >= piece.y && y < piece.y+piece.r_h) &&
-		(x >= piece.x && x < piece.x+piece.r_w))
-	    {
-		if (piece.piece[y-piece.y][x-piece.x]){
-		    putchar(OUTPUT_CHAR);
-		}
-	    }
-	    else if (board[y][x]){
+	    if (board[y][x] ==  '1'){
 		putchar(OUTPUT_CHAR);
-	    }
+
+	    }else if ((y >= piece.y && y < piece.y+PIECE_HEIGHT) &&
+		(x >= piece.x && x < piece.x+PIECE_WIDTH))
+	    {
+		if (piece.piece[y-piece.y][x-piece.x] == '1'){
+		    putchar(OUTPUT_CHAR);
+		}else putchar(' '); 
+	    }else putchar(' ');
 	}
+	printf("|*|");	
 	putchar('\n');
     }
 }

@@ -17,11 +17,11 @@
 
 #ifdef __WIN32__
 #  include <conio.h>
-#  define TIME_USLEEP 10000
+#  define TIME_USLEEP 1000
 #else
 #  include <termios.h>
 #  include <unistd.h>
-#  define TIME_USLEEP 1000
+#  define TIME_USLEEP 10000
 #endif
 
 
