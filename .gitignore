@@ -1,0 +1,6 @@
+#ignore everything except this file, sources, config and information files.
+*
+!.gitignore
+!*.c
+!*.h
+!README
