@@ -22,6 +22,7 @@ struct Piece
     int x,y; 
 }piece;
 
+
 /* util functions */
 void clear_board();
 

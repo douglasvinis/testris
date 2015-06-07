@@ -16,6 +16,159 @@
 
 extern uint8_t board[BOARD_HEIGHT][BOARD_WIDTH];
 
+/* pieces and they rotations */
+/* TODO put this pieces on a separated file and load then.*/
+
+/* piece O  */
+char* piece_o[1][4] = 
+{
+  {/* this piece have only one retation form */
+    "1111    ",
+    "1111    ",
+    "        ",
+    "        "
+  }
+};
+
+/* piece I */
+char* piece_i[2][4] = 
+{
+  {
+    "11      ",
+    "11      ",
+    "11      ",
+    "11      "
+  },
+  {
+    "11111111",
+    "        ",
+    "        ",
+    "        "
+  }
+};
+
+/* piece Z */
+char* piece_z[2][4] = 
+{
+  {
+    "1111    ",
+    "  1111  ",
+    "        ",
+    "        "
+  },
+  {
+    "  11    ",
+    "1111    ",
+    "11      ", "        "
+  }
+};
+
+/* piece S */
+char* piece_s[2][4] = 
+{
+  {
+    "  1111  ",
+    "1111    ",
+    "        ",
+    "        "
+  },
+  {
+    "11      ",
+    "1111    ",
+    "  11    ",
+    "        "
+  }
+};
+
+/* piece T */
+char* piece_t[4][4] = 
+{
+  {
+    "  11    ",
+    "111111  ",
+    "        ",
+    "        "
+  },
+  {
+    "11      ",
+    "1111    ",
+    "11      ",
+    "        "
+  },
+  {
+    "111111  ",
+    "  11    ",
+    "        ",
+    "        "
+  },
+  {
+    "  11    ",
+    "1111    ",
+    "  11    ",
+    "        "
+  }
+};
+
+/* piece L */
+char* piece_l[4][4] = 
+{
+  {
+    "11      ",
+    "11      ",
+    "11      ",
+    "1111    "
+  },
+  {
+    "11111111",
+    "11      ",
+    "        ",
+    "        "
+  },
+  {
+    "1111    ",
+    "  11    ",
+    "  11    ",
+    "  11    "
+  },
+  {
+    "      11",
+    "11111111",
+    "        ",
+    "        "
+  }
+};
+
+/* piece J */
+char* piece_j[4][4] = 
+{
+  {
+    "  11    ",
+    "  11    ",
+    "  11    ",
+    "1111    "
+  },
+  {
+    "11      ",
+    "11111111",
+    "        ",
+    "        "
+  },
+  {
+    "1111    ",
+    "11      ",
+    "11      ",
+    "11      "
+  },
+  {
+    "11111111",
+    "      11",
+    "        ",
+    "        "
+  }
+};
+
+/* global variable only for test before random numbers generation*/
+uint8_t piece_model = 0;
 
 void clear_board()
 {
@@ -32,28 +185,42 @@ void clear_board()
 
 void rotate_piece()
 {
-    /* if is a O piece */
-    if (piece.type == 0) return;
+    if (piece.type = 0) return;
+    if (piece.type = 1)
+    {
+	if (piece.direction == 2) piece.direction = 0;
+	else piece.direction++;
+	    
+	memcpy(piece.piece, piece_i[piece.direction],sizeof piece_i[piece.direction]);
+    }
 }
 
 void gen_random_piece()
 {
     /* TODO random number here.. */ 
-    uint8_t piece_model = 0; /* kind of piece will be generate now.*/
+    /*uint8_t piece_model = 0;  kind of piece will be generate now.*/
+    
+    if (piece_model == 7) piece_model = 0;
+
+    /* se piece position */
+    piece.x = 10; piece.y = 0;
 
     if (piece_model == 0)
     {
 	/* O piece */
-	piece.piece[0] = "11      ";
-	piece.piece[1] = "11      ";
-	piece.piece[2] = "11      ";
-	piece.piece[3] = "1111    ";
+	memcpy(piece.piece, piece_o[0],sizeof piece_o[0]);
 	piece.direction = 0;
 	piece.type = 0;
-	piece.x = 4; piece.y = 0;
+	gen_piece_rsize();
+    }else if (piece_model == 1)
+    {
+	memcpy(piece.piece, piece_i[0],sizeof piece_i[0]);
+	piece.direction = 0;
+	piece.type = 1;
 	gen_piece_rsize();
     }
 
+    piece_model++;
 }
 
 void gen_piece_rsize()

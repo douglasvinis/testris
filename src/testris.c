@@ -182,6 +182,9 @@ void start()
 	    if (command == 's' && collision[2] != COL_DOWN){
 		piece.y += 1;
 	    }
+	    if (command == 'q'){
+		rotate_piece();
+	    }
 	}
 	show();
     }
