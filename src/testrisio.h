@@ -34,6 +34,8 @@ static struct termios settings;
 static struct termios start_settings;
 #endif
 
+char message[100];
+
 /* 
 * if not in Windows system, implement conio.h function to send back
 * true or false if has keyboard input. 

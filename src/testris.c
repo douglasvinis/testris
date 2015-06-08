@@ -7,6 +7,7 @@
 *|
 \===========================================================================*/
 
+#include <time.h>
 
 #include "testris.h"
 #include "testrisio.h"
@@ -136,9 +137,15 @@ void start()
 {
     uint8_t is_running = 1;
     char command = 0;
-    int time = 0; /* count how many times to piece fall*/
-    fall_maxt = 20;
+    int time_f = 0; /* count how many times to piece fall*/
+    int time_l = 0; /* count time to leave the piece when is collide on pile*/
+    int time_l_max = 50; /* max time to leve the piece on pile */
+    fall_maxt = 60;
 
+    level = 1;
+    
+
+    srand(time(NULL));
     input_init();
     clear_board();
     gen_random_piece();
@@ -147,26 +154,33 @@ void start()
     {
 	uint8_t collision[3] = {0,0,0};
 	uint8_t row_full;
-
 	/* wait a little time*/
-	usleep(TIME_USLEEP);
-	clear_screen();
+	usleep(TIME_USLEEP); clear_screen();
 
 	col_detection(collision);
 	row_full = row_detection();
-	if (collision[2] == COL_DOWN)
+	if (collision[2] == COL_DOWN || time_l)
 	{ 
-	    col_handler();
-	    gen_random_piece();
+	    if (time_l ==0) time_l =1;
+	    else time_l++;
+	    /* only reset the piece to de beginning again if time to level piece
+	    * is past.
+	    */
+	    if ( time_l > time_l_max){
+		time_l = 0;
+		col_handler();
+		gen_random_piece();
+	    }
 	}
 	if (row_full){
 	     row_handler();
 	}
 	
-	time++;
-	if (time > fall_maxt)
+	time_f++;
+	/* fall only when piece not are collided */
+	if (time_f > (fall_maxt-(level*5)) && !time_l)
 	{
-	    time = 0;
+	    time_f = 0;
 	    piece.y += 1;
 	} 
 
@@ -186,6 +200,8 @@ void start()
 		rotate_piece();
 	    }
 	}
+	/* each +10 in row the level is encreased and velocity too */
+	if (rows == level*10) level++;
 	show();
     }
 

@@ -7,11 +7,15 @@
 *|
 \===========================================================================*/
 
+/*TODO this file contains horrible code,so much repeated code which need to be fixed. */ 
+
 #include <stdlib.h>
 #include <stdint.h>
 #include <time.h>
+#include <string.h>
 
 #include "testrisutils.h"
+#include "testrisio.h"
 #include "testris.h"
 
 extern uint8_t board[BOARD_HEIGHT][BOARD_WIDTH];
@@ -115,11 +119,11 @@ char* piece_l[4][4] =
   {
     "11      ",
     "11      ",
-    "11      ",
-    "1111    "
+    "1111    ",
+    "        "
   },
   {
-    "11111111",
+    "111111  ",
     "11      ",
     "        ",
     "        "
@@ -128,11 +132,11 @@ char* piece_l[4][4] =
     "1111    ",
     "  11    ",
     "  11    ",
-    "  11    "
+    "        "
   },
   {
-    "      11",
-    "11111111",
+    "    11  ",
+    "111111  ",
     "        ",
     "        "
   }
@@ -144,12 +148,12 @@ char* piece_j[4][4] =
   {
     "  11    ",
     "  11    ",
-    "  11    ",
-    "1111    "
+    "1111    ",
+    "        "
   },
   {
     "11      ",
-    "11111111",
+    "111111  ",
     "        ",
     "        "
   },
@@ -157,18 +161,15 @@ char* piece_j[4][4] =
     "1111    ",
     "11      ",
     "11      ",
-    "11      "
+    "        "
   },
   {
-    "11111111",
-    "      11",
+    "111111  ",
+    "    11  ",
     "        ",
     "        "
   }
 };
-
-/* global variable only for test before random numbers generation*/
-uint8_t piece_model = 0;
 
 void clear_board()
 {
@@ -185,42 +186,144 @@ void clear_board()
 
 void rotate_piece()
 {
-    if (piece.type = 0) return;
-    if (piece.type = 1)
+    sprintf(message,"%d, %d",piece.direction,piece.type);
+
+    switch (piece.type)
     {
-	if (piece.direction == 2) piece.direction = 0;
+	case 0:
+	    return ;
+	case 1:
+    {/*piece I*/
+	if (piece.direction == 1) piece.direction = 0;
 	else piece.direction++;
 	    
-	memcpy(piece.piece, piece_i[piece.direction],sizeof piece_i[piece.direction]);
+	memcpy(piece.piece, piece_i[piece.direction],(4*8)*sizeof(char) );
+	gen_piece_rsize();
+	break;
+    }/*piece S*/
+	case 2:
+    {
+	if (piece.direction == 1) piece.direction = 0;
+	else piece.direction++;
+	    
+	memcpy(piece.piece, piece_s[piece.direction],(4*8)*sizeof(char) );
+	gen_piece_rsize();
+	break;
+    }
+	case 3:
+    {/*piece Z*/
+	if (piece.direction == 1) piece.direction = 0;
+	else piece.direction++;
+	    
+	memcpy(piece.piece, piece_z[piece.direction],(4*8)*sizeof(char) );
+	gen_piece_rsize();
+	break;
+    }
+	case 4:
+    {/*piece T*/
+	if (piece.direction == 3) piece.direction = 0;
+	else piece.direction++;
+	    
+	memcpy(piece.piece, piece_t[piece.direction],(4*8)*sizeof(char) );
+	gen_piece_rsize();
+	break;
+    }
+	case 5:
+    {/*piece L*/
+	if (piece.direction == 3) piece.direction = 0;
+	else piece.direction++;
+	    
+	memcpy(piece.piece, piece_l[piece.direction],(4*8)*sizeof(char) );
+	gen_piece_rsize();
+	break;
+    }	
+	case 6:
+    {/*piece J*/
+	if (piece.direction == 3) piece.direction = 0;
+	else piece.direction++;
+	    
+	memcpy(piece.piece, piece_j[piece.direction],(4*8)*sizeof(char) );
+	gen_piece_rsize();
+	break;
+    }
     }
 }
 
 void gen_random_piece()
 {
-    /* TODO random number here.. */ 
-    /*uint8_t piece_model = 0;  kind of piece will be generate now.*/
+    int piece_model = 0;
+    int piece_n = 7;  /* number of diferent pieces */
+    int divisor = RAND_MAX/(6+1); /* divisor for get random range */
+
+    /* random range between 0 and number of pieces */
+    do {
+	piece_model = rand() / divisor;
+    } while (piece_model >piece_n);
     
-    if (piece_model == 7) piece_model = 0;
+    if (piece_model == piece_n) piece_model = 0;
 
     /* se piece position */
     piece.x = 10; piece.y = 0;
 
-    if (piece_model == 0)
+    switch (piece_model)
     {
-	/* O piece */
-	memcpy(piece.piece, piece_o[0],sizeof piece_o[0]);
+	case 0:
+    {/* piece O */
+	memcpy(piece.piece, piece_o[0],(4*8)*sizeof(char)) ;
 	piece.direction = 0;
 	piece.type = 0;
 	gen_piece_rsize();
-    }else if (piece_model == 1)
-    {
-	memcpy(piece.piece, piece_i[0],sizeof piece_i[0]);
+	break;
+    }
+	case 1:
+    {/* piece I */
+	memcpy(piece.piece, piece_i[0],(4*8)*sizeof(char)) ;
 	piece.direction = 0;
 	piece.type = 1;
 	gen_piece_rsize();
+	break;
     }
-
-    piece_model++;
+	case 2:
+    {/* piece Z */
+	memcpy(piece.piece, piece_z[0],(4*8)*sizeof(char)) ;
+	piece.direction = 0;
+	piece.type = 2;
+	gen_piece_rsize();
+	break;
+    }  
+	case 3:
+    {/* piece S */
+	memcpy(piece.piece, piece_s[0],(4*8)*sizeof(char)) ;
+	piece.direction = 0;
+	piece.type = 3;
+	gen_piece_rsize();
+	break;
+    }
+	case 4:
+    {/* piece T */
+	memcpy(piece.piece, piece_t[0],(4*8)*sizeof(char)) ;
+	piece.direction = 0;
+	piece.type = 4;
+	gen_piece_rsize();
+	break;
+    }
+	case 5:
+    {/* piece L */
+	memcpy(piece.piece, piece_l[0],(4*8)*sizeof(char)) ;
+	piece.direction = 0;
+	piece.type = 5;
+	gen_piece_rsize();
+	break;
+    }
+	case 6:
+    { /* piece J */
+	memcpy(piece.piece, piece_j[0],(4*8)*sizeof(char)) ;
+	piece.direction = 0;
+	piece.type = 6;
+	gen_piece_rsize();
+	break;
+    }
+    }
 }
 
 void gen_piece_rsize()

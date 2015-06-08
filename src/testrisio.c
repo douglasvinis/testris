@@ -84,7 +84,20 @@ void show()
 		}else putchar(' '); 
 	    }else putchar(' ');
 	}
-	printf("|*|");	
+	printf("|*|");
+	/* printing score rows and level on right of board */
+	switch (y)
+	{
+	    case 3:
+		printf("\tSCORE: %d",get_score());
+		break;
+	    case 5:
+		printf("\tROWS: %d",get_rows());
+		break;
+	    case 7:
+		printf("\tLEVEL: %d",get_level());
+		break;
+	}
 	putchar('\n');
     }
 }
