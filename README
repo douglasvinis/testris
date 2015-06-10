@@ -23,7 +23,7 @@ Abaixo os blocos contem todas as peças e suas possiveis rotaçoẽs:
 
 [English]
 
-This is The Testris, a clone of the famous Tetris created by Alexey Pajitnov in
+This is Testris, a clone of the famous Tetris created by Alexey Pajitnov in
 80's on soviet Russia
 
 This game is simple and coherent with the first oficial version of the game
@@ -70,16 +70,16 @@ ________    &&______	________    __&&____
 ________    ________	________    ________
 
 ========L BLOCK======
-&&______    &&&&&&&&	&&&&____    ______&&
-&&______    &&______	__&&____    &&&&&&&&
-&&______    ________	__&&____    ________
+&&______    &&&&&&__	&&&&____    ____&&__
+&&______    &&______	__&&____    &&&&&&__
 &&&&____    ________	__&&____    ________
+________    ________	________    ________
 
 ========J BLOCK======
-__&&____    &&______	&&&&____    &&&&&&&&
-__&&____    &&&&&&&&	&&______    ______&&
-__&&____    ________	&&______    ________
+__&&____    &&______	&&&&____    &&&&&&__
+__&&____    &&&&&&__	&&______    ____&&__
 &&&&____    ________	&&______    ________
+________    ________	________    ________
 
 ========O BLOCK=======
 &&&&____

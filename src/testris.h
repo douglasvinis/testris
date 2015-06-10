@@ -3,7 +3,9 @@
 *|   author: Douglas Knowman
 *|   email : douglasknowman@gmail.com
 *|
-*|   Copyright(C) Douglas Knowman, 2015
+*|   Copyright(C) 2015 Douglas Knowman
+*|
+*|Testris is  distributed under the terms of the GNU General Public License
 *|
 \===========================================================================*/
 
