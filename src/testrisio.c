@@ -16,6 +16,8 @@
 #include "testris.h"
 #include "testrisutils.h"
 
+#define VERSION "0.2.3"
+
 #ifndef __WIN32__ 
 uint8_t kbhit()
 {
@@ -66,6 +68,13 @@ char get_keyhit()
     #endif
 }
 
+void game_over()
+{
+    clear_screen();
+    printf("\n\n\t***  GAME OVER  ***\n\tFINAL SCORE:\t%d\n\tROWS:\t\t%d\n\tLEVEL:\t\t%d\n\n",
+           get_score(),get_rows(),get_level());
+}
+
 void show()
 {
     register uint8_t x,y;
@@ -90,15 +99,31 @@ void show()
 	/* printing score rows and level on right of board */
 	switch (y)
 	{
+        case 1:
+          printf("<< TESTRIS %s >>",VERSION);
+          break;
 	    case 3:
-		printf("\tSCORE: %d",get_score());
-		break;
+		  printf("\tSCORE: %d",get_score());
+		  break;
 	    case 5:
-		printf("\tROWS: %d",get_rows());
-		break;
+		  printf("\tROWS: %d",get_rows());
+		  break;
 	    case 7:
-		printf("\tLEVEL: %d",get_level());
-		break;
+		  printf("\tLEVEL: %d",get_level());
+		  break;
+        case 9:
+          printf("  a - mover esquerda | d - mover direita"); 
+          break;
+        case 10:
+          printf("  s - queda com velocidade | w - rodar peca");
+          break;
+        case 11:
+          printf("  q - sair do jogo | p - pausar");
+          break;
+
+        case 19:
+          printf("|| %s  ||",message);
+          break;
 	}
 	putchar('\n');
     }

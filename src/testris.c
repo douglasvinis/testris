@@ -10,6 +10,7 @@
 \===========================================================================*/
 
 #include <time.h>
+#include <string.h>
 
 #include "testris.h"
 #include "testrisio.h"
@@ -72,6 +73,9 @@ void col_detection(uint8_t* state)
 void col_handler()
 {
     register char x,y;
+    /* calculating pontuation of each piece which colides */
+    score += piece.type * 6;
+
     /* simple copy the piece on the board*/
     for (y = 0; y < PIECE_HEIGHT; y++)
     {
@@ -89,6 +93,7 @@ uint8_t row_detection()
     uint8_t cnt; /* count for every horizontal valid space on board*/
     uint8_t state = 0;
     register char x,y;
+    /* TODO system for calculate row points correctly*/
 
     pile_height = 0; 
     /*
@@ -113,6 +118,7 @@ uint8_t row_detection()
 	    state = 1;
 	    row_y = y;
 	    rows++; 
+        score+= 230;
 	    break;
 	}else cnt = 0;
     }
@@ -142,6 +148,7 @@ void start()
     int time_f = 0; /* count how many times to piece fall*/
     int time_l = 0; /* count time to leave the piece when is collide on pile*/
     int time_l_max = 50; /* max time to leve the piece on pile */
+    char paused = 0;
     fall_maxt = 60;
 
     level = 1;
@@ -156,8 +163,19 @@ void start()
     {
 	uint8_t collision[3] = {0,0,0};
 	uint8_t row_full;
+
+    /*sending status message */
+    if (paused){
+        strcpy(message,"paused");
+    }else{
+        strcpy(message,"playing");
+    }
+
 	/* wait a little time*/
 	usleep(TIME_USLEEP); clear_screen();
+    
+    /* if pile reach the top game over */
+    if (pile_height == 1) is_running = 0;
 
 	col_detection(collision);
 	row_full = row_detection();
@@ -168,10 +186,13 @@ void start()
 	    /* only reset the piece to de beginning again if time to level piece
 	    * is past.
 	    */
-	    if ( time_l > time_l_max){
-		time_l = 0;
-		col_handler();
-		gen_random_piece();
+	    if ( time_l > time_l_max)
+        {
+		    time_l = 0;
+            if ( collision[2] == COL_DOWN){ 
+		        col_handler();
+		        gen_random_piece();
+            }
 	    }
 	}
 	if (row_full){
@@ -180,7 +201,7 @@ void start()
 	
 	time_f++;
 	/* fall only when piece not are collided */
-	if (time_f > (fall_maxt-(level*5)) && !time_l)
+	if (time_f > (fall_maxt-(level*5)) && !time_l && !paused)
 	{
 	    time_f = 0;
 	    piece.y += 1;
@@ -189,23 +210,27 @@ void start()
 	/* get input from player to move the piece */
 	if(kbhit()){
 	    command = get_keyhit();
-	    if (command == 'a' && collision[0] != COL_LEFT){
+	    if (command == 'a' && collision[0] != COL_LEFT && !paused){
 		piece.x -= 2;
 	    }
-	    if (command == 'd' && collision[1] != COL_RIGHT){
+	    if (command == 'd' && collision[1] != COL_RIGHT && !paused){
 		piece.x += 2;
 	    }
-	    if (command == 's' && collision[2] != COL_DOWN){
+	    if (command == 's' && collision[2] != COL_DOWN && !paused){
 		piece.y += 1;
 	    }
-	    if (command == 'q'){
+	    if (command == 'w' && !paused){
 		rotate_piece();
 	    }
+        if (command == 'p') paused = paused ? 0:1;
+        if (command == 'q') is_running = 0;
 	}
 	/* each +10 in row the level is encreased and velocity too */
 	if (rows == level*10) level++;
 	show();
     }
+    /* game over message */
+    game_over();
 
     input_stop();
 }

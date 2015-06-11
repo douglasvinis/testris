@@ -50,7 +50,8 @@ void	input_init();
 void	input_stop();
 
 void	clear_screen();
-char get_keyhit();
+char    get_keyhit();
+void    game_over(); /* show final score when the game ends */
 void	show();	/* show all game on console */
 
 #endif
