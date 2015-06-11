@@ -1,0 +1,16 @@
+For install this program you don't need any library, just execute these commands
+on your terminal as root.
+
+./configure
+make 
+make install
+
+and then execute testris
+
+if you wish remove the program of your system just type.
+
+make uninstall
+
+if you wish clear the main directory of the program.
+
+make clean
