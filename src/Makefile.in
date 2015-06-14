@@ -86,7 +86,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = testris$(EXEEXT)
+bin_PROGRAMS = $(top_builddir)/testris$(EXEEXT)
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -98,10 +98,12 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_testris_OBJECTS = main.$(OBJEXT) testris.$(OBJEXT) \
+am___top_builddir__testris_OBJECTS = main.$(OBJEXT) testris.$(OBJEXT) \
 	testrisio.$(OBJEXT) testrisutils.$(OBJEXT)
-testris_OBJECTS = $(am_testris_OBJECTS)
-testris_LDADD = $(LDADD)
+__top_builddir__testris_OBJECTS =  \
+	$(am___top_builddir__testris_OBJECTS)
+__top_builddir__testris_LDADD = $(LDADD)
+am__dirstamp = $(am__leading_dot)dirstamp
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -130,8 +132,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(testris_SOURCES)
-DIST_SOURCES = $(testris_SOURCES)
+SOURCES = $(__top_builddir__testris_SOURCES)
+DIST_SOURCES = $(__top_builddir__testris_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -245,7 +247,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-testris_SOURCES = main.c testris.c testrisio.c testrisutils.c
+__top_builddir__testris_SOURCES = main.c testris.c testrisio.c testrisutils.c
 all: all-am
 
 .SUFFIXES:
@@ -321,10 +323,13 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+$(top_builddir)/$(am__dirstamp):
+	@$(MKDIR_P) $(top_builddir)
+	@: > $(top_builddir)/$(am__dirstamp)
 
-testris$(EXEEXT): $(testris_OBJECTS) $(testris_DEPENDENCIES) $(EXTRA_testris_DEPENDENCIES) 
-	@rm -f testris$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(testris_OBJECTS) $(testris_LDADD) $(LIBS)
+$(top_builddir)/testris$(EXEEXT): $(__top_builddir__testris_OBJECTS) $(__top_builddir__testris_DEPENDENCIES) $(EXTRA___top_builddir__testris_DEPENDENCIES) $(top_builddir)/$(am__dirstamp)
+	@rm -f $(top_builddir)/testris$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(__top_builddir__testris_OBJECTS) $(__top_builddir__testris_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -466,6 +471,7 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-test -z "$(top_builddir)/$(am__dirstamp)" || rm -f $(top_builddir)/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"

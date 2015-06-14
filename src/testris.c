@@ -147,9 +147,7 @@ void start()
     char command = 0;
     int time_f = 0; /* count how many times to piece fall*/
     int time_l = 0; /* count time to leave the piece when is collide on pile*/
-    int time_l_max = 50; /* max time to leve the piece on pile */
     char paused = 0;
-    fall_maxt = 60;
 
     level = 1;
     
@@ -175,7 +173,7 @@ void start()
 	usleep(TIME_USLEEP); clear_screen();
     
     /* if pile reach the top game over */
-    if (pile_height == 1) is_running = 0;
+    if (pile_height == 1 || level == 6) is_running = 0;
 
 	col_detection(collision);
 	row_full = row_detection();
@@ -186,7 +184,7 @@ void start()
 	    /* only reset the piece to de beginning again if time to level piece
 	    * is past.
 	    */
-	    if ( time_l > time_l_max)
+	    if ( time_l > TIME_L_MAX)
         {
 		    time_l = 0;
             if ( collision[2] == COL_DOWN){ 
@@ -201,14 +199,16 @@ void start()
 	
 	time_f++;
 	/* fall only when piece not are collided */
-	if (time_f > (fall_maxt-(level*5)) && !time_l && !paused)
+	if (time_f > (TIME_F_MAX - (level * LEVEL_DIFICUTY)) && !time_l && !paused)
 	{
 	    time_f = 0;
 	    piece.y += 1;
 	} 
 
+	col_detection(collision);
+
 	/* get input from player to move the piece */
-	if(kbhit()){
+	if(tkbhit()){
 	    command = get_keyhit();
 	    if (command == 'a' && collision[0] != COL_LEFT && !paused){
 		piece.x -= 2;
@@ -220,10 +220,16 @@ void start()
 		piece.y += 1;
 	    }
 	    if (command == 'w' && !paused){
-		rotate_piece();
+		    rotate_piece();
 	    }
-        if (command == 'p') paused = paused ? 0:1;
-        if (command == 'q') is_running = 0;
+        if (command == 'p')
+        {
+             paused = paused ? 0:1;
+        }
+        if (command == 'q')
+        {
+             is_running = 0;
+        }
 	}
 	/* each +10 in row the level is encreased and velocity too */
 	if (rows == level*10) level++;

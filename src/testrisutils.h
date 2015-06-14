@@ -17,7 +17,7 @@
 
 struct Piece
 {
-    char* piece[ PIECE_HEIGHT ];//[ PIECE_WIDTH ]; 
+    char piece[ PIECE_HEIGHT ][ PIECE_WIDTH ]; 
     uint8_t direction;
     uint8_t type;
     uint8_t r_w, r_h; /* real width and height of piece */
@@ -30,6 +30,7 @@ void clear_board();
 
 void rotate_piece();
 void gen_random_piece();
+void piece_copy(char **from,char (*to)[8]);
 
 /* generate real width and height of the piece */
 void gen_piece_rsize();

@@ -3,6 +3,10 @@ on your terminal.
 
 ./configure
 make 
+
+if you don't want to install on you system just run the testris executable.
+otherwise just type:
+
 sudo make install
 
 and then execute testris

@@ -13,17 +13,29 @@
 * this file contains all the multiplatform code of the testris game 
 * all input and output multiplatform functions there are here.
 */
-#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 
 #ifdef __WIN32__
 #  include <conio.h>
 #  define TIME_USLEEP 1000
+#  define VERSION "0.2.4 [WIN32]"
+
+/* some constants for time in game */
+#  define TIME_L_MAX 10 /* max time to leave the piece on pile */
+#  define TIME_F_MAX 5 /* max time to wait when is fall */
+#  define LEVEL_DIFICUTY 1 /* fator for increase the fall speed of the piece */
+
 #else
 #  include <termios.h>
 #  include <unistd.h>
 #  define TIME_USLEEP 10000
+#  define VERSION "0.2.4 [GNU/LINUX]"
+
+/* some constants for time in game */
+#  define TIME_L_MAX 50 /* max time to leave the piece on pile */
+#  define TIME_F_MAX 60 /* max time to wait when is fall */
+#  define LEVEL_DIFICUTY 10 /* fator for increase the fall speed of the piece */
 #endif
 
 
@@ -43,7 +55,9 @@ char message[100];
 * true or false if has keyboard input. 
 */
 #ifndef __WIN32__
-uint8_t kbhit();
+uint8_t tkbhit(); /* if have keyboard input */
+#else
+uint8_t tkbhit();
 #endif
 
 void	input_init();

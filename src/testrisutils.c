@@ -11,6 +11,7 @@
 
 /*TODO this file contains horrible code,so much repeated code which need to be fixed. */ 
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <time.h>
@@ -199,25 +200,25 @@ void rotate_piece()
 	if (piece.direction == 1) piece.direction = 0;
 	else piece.direction++;
 	    
-	memcpy(piece.piece, piece_i[piece.direction],(4*8)*sizeof(char) );
+    piece_copy(piece_i[piece.direction],piece.piece);
 	gen_piece_rsize();
 	break;
-    }/*piece S*/
+    }/*piece Z*/
 	case 2:
     {
 	if (piece.direction == 1) piece.direction = 0;
 	else piece.direction++;
 	    
-	memcpy(piece.piece, piece_s[piece.direction],(4*8)*sizeof(char) );
+    piece_copy(piece_z[piece.direction],piece.piece);
 	gen_piece_rsize();
 	break;
     }
 	case 3:
-    {/*piece Z*/
+    {/*piece S*/
 	if (piece.direction == 1) piece.direction = 0;
 	else piece.direction++;
 	    
-	memcpy(piece.piece, piece_z[piece.direction],(4*8)*sizeof(char) );
+    piece_copy(piece_s[piece.direction],piece.piece);
 	gen_piece_rsize();
 	break;
     }
@@ -226,7 +227,7 @@ void rotate_piece()
 	if (piece.direction == 3) piece.direction = 0;
 	else piece.direction++;
 	    
-	memcpy(piece.piece, piece_t[piece.direction],(4*8)*sizeof(char) );
+    piece_copy(piece_t[piece.direction],piece.piece);
 	gen_piece_rsize();
 	break;
     }
@@ -235,7 +236,7 @@ void rotate_piece()
 	if (piece.direction == 3) piece.direction = 0;
 	else piece.direction++;
 	    
-	memcpy(piece.piece, piece_l[piece.direction],(4*8)*sizeof(char) );
+    piece_copy(piece_l[piece.direction],piece.piece);
 	gen_piece_rsize();
 	break;
     }	
@@ -244,10 +245,19 @@ void rotate_piece()
 	if (piece.direction == 3) piece.direction = 0;
 	else piece.direction++;
 	    
-	memcpy(piece.piece, piece_j[piece.direction],(4*8)*sizeof(char) );
+    piece_copy(piece_j[piece.direction],piece.piece);
 	gen_piece_rsize();
 	break;
     }
+    }
+}
+
+void piece_copy(char **from,char (*to)[8])
+{
+    int i;
+    /* this copy a matrix of 4 lines of 8 characters to piece struct*/
+    for (i =0; i<4; i++){
+        memcpy(piece.piece[i],from[i],8*sizeof(char));
     }
 }
 
@@ -271,7 +281,7 @@ void gen_random_piece()
     {
 	case 0:
     {/* piece O */
-	memcpy(piece.piece, piece_o[0],(4*8)*sizeof(char)) ;
+    piece_copy(piece_o[0],piece.piece);
 	piece.direction = 0;
 	piece.type = 0;
 	gen_piece_rsize();
@@ -279,7 +289,7 @@ void gen_random_piece()
     }
 	case 1:
     {/* piece I */
-	memcpy(piece.piece, piece_i[0],(4*8)*sizeof(char)) ;
+    piece_copy(piece_i[0],piece.piece);
 	piece.direction = 0;
 	piece.type = 1;
 	gen_piece_rsize();
@@ -287,7 +297,7 @@ void gen_random_piece()
     }
 	case 2:
     {/* piece Z */
-	memcpy(piece.piece, piece_z[0],(4*8)*sizeof(char)) ;
+    piece_copy(piece_z[0],piece.piece);
 	piece.direction = 0;
 	piece.type = 2;
 	gen_piece_rsize();
@@ -295,7 +305,7 @@ void gen_random_piece()
     }  
 	case 3:
     {/* piece S */
-	memcpy(piece.piece, piece_s[0],(4*8)*sizeof(char)) ;
+    piece_copy(piece_s[0],piece.piece);
 	piece.direction = 0;
 	piece.type = 3;
 	gen_piece_rsize();
@@ -303,7 +313,7 @@ void gen_random_piece()
     }
 	case 4:
     {/* piece T */
-	memcpy(piece.piece, piece_t[0],(4*8)*sizeof(char)) ;
+    piece_copy(piece_t[0],piece.piece);
 	piece.direction = 0;
 	piece.type = 4;
 	gen_piece_rsize();
@@ -311,7 +321,7 @@ void gen_random_piece()
     }
 	case 5:
     {/* piece L */
-	memcpy(piece.piece, piece_l[0],(4*8)*sizeof(char)) ;
+    piece_copy(piece_l[0],piece.piece);
 	piece.direction = 0;
 	piece.type = 5;
 	gen_piece_rsize();
@@ -319,7 +329,7 @@ void gen_random_piece()
     }
 	case 6:
     { /* piece J */
-	memcpy(piece.piece, piece_j[0],(4*8)*sizeof(char)) ;
+    piece_copy(piece_j[0],piece.piece);
 	piece.direction = 0;
 	piece.type = 6;
 	gen_piece_rsize();

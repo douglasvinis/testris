@@ -16,10 +16,8 @@
 #include "testris.h"
 #include "testrisutils.h"
 
-#define VERSION "0.2.3"
-
 #ifndef __WIN32__ 
-uint8_t kbhit()
+uint8_t tkbhit()
 {
     struct timeval tv; fd_set fds;
     tv.tv_sec = 0;
@@ -28,6 +26,11 @@ uint8_t kbhit()
     FD_SET(STDIN_FILENO,&fds);
     select(STDIN_FILENO+1,&fds,NULL,NULL,&tv);
     return FD_ISSET(STDIN_FILENO,&fds);
+}
+#else
+uint8_t tkbhit()
+{
+    return kbhit();
 }
 #endif
 
@@ -73,6 +76,8 @@ void game_over()
     clear_screen();
     printf("\n\n\t***  GAME OVER  ***\n\tFINAL SCORE:\t%d\n\tROWS:\t\t%d\n\tLEVEL:\t\t%d\n\n",
            get_score(),get_rows(),get_level());
+    printf("<< PRESS ENTER TO EXIT >>\n");
+    getchar();
 }
 
 void show()

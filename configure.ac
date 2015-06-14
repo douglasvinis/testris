@@ -1,7 +1,7 @@
 
 #prerequest version and initializing with name, version and bug fix adress.
 AC_PREREQ([2.69])
-AC_INIT([testris], [0.1], [douglasknowman@gmail.com])
+AC_INIT([testris], [0.2], [douglasknowman@gmail.com])
 
 #initializing automake
 AM_INIT_AUTOMAKE([foreign])

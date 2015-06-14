@@ -1,9 +1,9 @@
 #ignore everything except this file, sources, config and information files.
 testris
 *.o
-autom4te.cache/*
 config.status
+.dirstamp
+autom4te.cache/*
 config.log
-aclocal.m4
 Makefile
 src/.deps/*
