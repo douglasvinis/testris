@@ -22,6 +22,9 @@
 #include "testris.h"
 
 extern uint8_t board[BOARD_HEIGHT][BOARD_WIDTH];
+/* variables for count time between frames. */
+static uint32_t last_time = 0;
+static uint32_t actual_time = 0;
 
 /* pieces and they rotations */
 /* TODO put this pieces on a separated file and load then.*/
@@ -335,6 +338,19 @@ void gen_random_piece()
 	gen_piece_rsize();
 	break;
     }
+    }
+}
+
+void frame_sleep()
+{
+    uint32_t n_time;    
+    actual_time = get_time_msec(); 
+    /* get time between actual time and last time of this execution. */
+    n_time = actual_time - last_time;
+    last_time = actual_time;
+    
+    if (n_time < TIME_PER_FRAME){
+        usleep(TIME_PER_FRAME - n_time);
     }
 }
 

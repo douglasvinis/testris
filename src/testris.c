@@ -169,8 +169,9 @@ void start()
         strcpy(message,"playing");
     }
 
-	/* wait a little time*/
-	usleep(TIME_USLEEP); clear_screen();
+	/* if time to process si less than velocity */
+	frame_sleep();
+    clear_screen();
     
     /* if pile reach the top game over */
     if (pile_height == 1 || level == 6) is_running = 0;

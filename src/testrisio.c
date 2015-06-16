@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 #include "testrisio.h"
 #include "testris.h"
@@ -71,6 +72,22 @@ char get_keyhit()
     #endif
 }
 
+int get_time_msec()
+{
+    int mtime;
+    #ifdef __WIN32__
+    SYSTEMTIME st;
+    GetSystemTime(&st);
+    mtime = (int) st.wMilliseconds;
+
+    #else
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    mtime = tv.tv_usec / 1000;
+    #endif
+    return mtime;
+}
+
 void game_over()
 {
     clear_screen();
@@ -116,18 +133,26 @@ void show()
 	    case 7:
 		  printf("\tLEVEL: %d",get_level());
 		  break;
-        case 9:
+        case 9: /* instrucoes de controle em portugues */
           printf("  a - mover esquerda | d - mover direita"); 
           break;
         case 10:
-          printf("  s - queda com velocidade | w - rodar peca");
-          break;
+          printf("  s - queda com velocidade | w - rodar peca"); break;
         case 11:
-          printf("  q - sair do jogo | p - pausar");
+          printf("  q - sair do jogo | p - pausar/continuar");
+          break;
+        case 13:/* english control instructions */
+          printf("  a - move left | d -move right");
+          break;
+        case 14:
+          printf("  s - speed fall | w - rotate piece");
+          break;
+        case 15:
+          printf("  q - exit | p - pause/resume");
           break;
 
         case 19:
-          printf("|| %s  ||",message);
+          printf("\t|| %s  ||",message);
           break;
 	}
 	putchar('\n');

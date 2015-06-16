@@ -18,8 +18,9 @@
 
 #ifdef __WIN32__
 #  include <conio.h>
-#  define TIME_USLEEP 1000
-#  define VERSION "0.2.4 [WIN32]"
+#  include <windows.h>
+#  define TIME_PER_FRAME 10000
+#  define VERSION "0.2.6 [WIN32]"
 
 /* some constants for time in game */
 #  define TIME_L_MAX 10 /* max time to leave the piece on pile */
@@ -29,8 +30,8 @@
 #else
 #  include <termios.h>
 #  include <unistd.h>
-#  define TIME_USLEEP 10000
-#  define VERSION "0.2.4 [GNU/LINUX]"
+#  define TIME_PER_FRAME 10000 
+#  define VERSION "0.2.6 [GNU/LINUX]"
 
 /* some constants for time in game */
 #  define TIME_L_MAX 50 /* max time to leave the piece on pile */
@@ -67,5 +68,6 @@ void	clear_screen();
 char    get_keyhit();
 void    game_over(); /* show final score when the game ends */
 void	show();	/* show all game on console */
+int     get_time_msec(); /* return system time in miliseconds */
 
 #endif

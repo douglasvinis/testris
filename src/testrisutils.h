@@ -35,4 +35,7 @@ void piece_copy(char **from,char (*to)[8]);
 /* generate real width and height of the piece */
 void gen_piece_rsize();
 
+/* wait until the frame is in correct time. */
+void frame_sleep();
+
 #endif
