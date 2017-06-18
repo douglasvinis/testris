@@ -1,9 +1,3 @@
 #ignore everything except this file, sources, config and information files.
-testris
-*.o
-config.status
-.dirstamp
-autom4te.cache/*
-config.log
-Makefile
-src/.deps/*
+src/*.o
+build/
