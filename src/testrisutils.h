@@ -22,8 +22,9 @@ struct Piece
     uint8_t type;
     uint8_t r_w, r_h; /* real width and height of piece */
     int x,y; 
-}piece;
+};
 
+extern struct Piece piece;
 
 /* util functions */
 void clear_board();

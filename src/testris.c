@@ -16,6 +16,9 @@
 #include "testrisio.h"
 #include "testrisutils.h"
 
+/* declare the game board which will be store all piled game pieces*/
+uint8_t board[ BOARD_HEIGHT ][ BOARD_WIDTH ];
+
 
 uint32_t get_score()
 {

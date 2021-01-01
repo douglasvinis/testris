@@ -23,8 +23,7 @@
 #define COL_LEFT 1
 #define COL_DOWN 3
 
-/* declare the game board which will be store all piled game pieces*/
-uint8_t board[ BOARD_HEIGHT ][ BOARD_WIDTH ];
+extern uint8_t board[ BOARD_HEIGHT ][ BOARD_WIDTH ];
 
 static uint32_t score;
 static uint32_t rows;

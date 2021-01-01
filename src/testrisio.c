@@ -17,6 +17,8 @@
 #include "testris.h"
 #include "testrisutils.h"
 
+char message[100];
+
 #ifndef __WIN32__ 
 uint8_t tkbhit()
 {

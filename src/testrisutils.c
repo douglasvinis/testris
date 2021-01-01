@@ -21,7 +21,8 @@
 #include "testrisio.h"
 #include "testris.h"
 
-extern uint8_t board[BOARD_HEIGHT][BOARD_WIDTH];
+struct Piece piece;
+
 /* variables for count time between frames. */
 static uint32_t last_time = 0;
 static uint32_t actual_time = 0;

@@ -19,7 +19,7 @@ uninstall:
 	rm /bin/testris
 	@echo "--> uninstaled"
 
-clean:
+clear:
 	@echo "--> removing binaries.."
 	rm -rd $(BUILD_DIR)
 	@echo "--> binaries removed!"
