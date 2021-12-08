@@ -1,4 +1,4 @@
-@note: This is one of my very early projects when i was learning c,
+@note: This is one of my very early projects, when i was learning c,
 and is not an example of good programming at all.
 
 [Português Brasil]
@@ -13,7 +13,7 @@ verçoes livres bem mais completas e polidas por ai.
 
 Esse projeto não vai usar nenhuma biblioteca externa somente as
 bibliotecas padroẽs da linguagem c e bibliotecas de plataformas especificas
-para algumas opera??es simples.
+para algumas operações simples.
 
 O jogo é simples o objetivo do jogador e empilhar uma peças que caem
 aleatoriamente na tela de forma que as linhas horizontais completas sejam
@@ -22,7 +22,7 @@ da pilha vai cair no espaço que foi liberado.A cada 10  linhas completas o leve
 do jogo vai subindo almentando assim a velocidade das peças que caem.O jogador
 também pode rotacionar as peças no sentido horário.
 
-Abaixo os blocos cont?m todas as peças e suas possiveis rotaçoẽs: 
+Abaixo os blocos contém todas as peças e suas possiveis rotaçoẽs: 
 
 [English]
 
@@ -43,51 +43,46 @@ row is complete it will be destroy and above pieces will be fall on created blac
 space. For each 10 complete rows the level will be increased velocity of the
 piece falling. The player can rotate the pieces on clockwise direction.
 
-the blocks below conteins all pieces and all rotation posibilities:
-
-#->My english is bad, if have something wrong please send me a email
-#--douglasknowman@gmail.com-- 
-
+the blocks below contein all pieces and all rotation posibilities:
 
 ========I BLOCK======
-&&______    &&&&&&&&
-&&______    ________
-&&______    ________
-&&______    ________
+00______    00000000
+00______    ________
+00______    ________
+00______    ________
 
 ========Z BLOCK=======
-&&&&____    __&&____
-__&&&&__    &&&&____
-________    &&______
+0000____    __00____
+__0000__    0000____
+________    00______
 ________    ________
 
 ========S BLOCK=======
-__&&&&__    &&______
-&&&&____    &&&&____
-________    __&&____
+__0000__    00______
+0000____    0000____
+________    __00____
 ________    ________
 
 ========T BLOCK=======
-__&&____    &&______	&&&&&&__    __&&____
-&&&&&&__    &&&&____	__&&____    &&&&____
-________    &&______	________    __&&____
+__00____    00______	000000__    __00____
+000000__    0000____	__00____    0000____
+________    00______	________    __00____
 ________    ________	________    ________
 
 ========L BLOCK======
-&&______    &&&&&&__	&&&&____    ____&&__
-&&______    &&______	__&&____    &&&&&&__
-&&&&____    ________	__&&____    ________
+00______    000000__	0000____    ____00__
+00______    00______	__00____    000000__
+0000____    ________	__00____    ________
 ________    ________	________    ________
 
 ========J BLOCK======
-__&&____    &&______	&&&&____    &&&&&&__
-__&&____    &&&&&&__	&&______    ____&&__
-&&&&____    ________	&&______    ________
+__00____    00______	0000____    000000__
+__00____    000000__	00______    ____00__
+0000____    ________	00______    ________
 ________    ________	________    ________
 
 ========O BLOCK=======
-&&&&____
-&&&&____
+0000____
+0000____
 ________
 ________
-
